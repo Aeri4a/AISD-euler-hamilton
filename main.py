@@ -162,7 +162,7 @@ for idx, t in enumerate(tempDensity02):
 
 # - Density 60%
 wsDensity06 = workbook.add_worksheet("density06")
-for idx, t in enumerate(wsDensity06):
+for idx, t in enumerate(tempDensity06):
     wsDensity06.write(0, idx, t["name"])
     for i in range(len(t["data"])):
         wsDensity06.write(i+1, idx, t["data"][i])
