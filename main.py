@@ -138,7 +138,7 @@ for d in densities:
             tempDensity06[0]["data"].append(r)
             tempDensity06[1]["data"].append(d_approx)
             tempDensity06[2]["data"].append(resultEuler)
-            tempDensity02[3]["data"].append(resultHamiltonA1)
+            tempDensity02[3]["data"].append(resultHamiltonA)
 
         print(f'n={r} done')
 
