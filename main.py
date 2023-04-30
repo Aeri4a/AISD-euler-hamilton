@@ -9,13 +9,13 @@ from hamiltonianCycles import *
 # -- GENERATE RANGES --
 # - I part
 p1_startNumber = 3
-p1_n = 10
+p1_n = 12
 p1_step = 1
 p1_dataRange = [x for x in range(
     p1_startNumber, p1_startNumber + (p1_n - 1) * p1_step + 1, p1_step)]
 
 # - II part
-p2_startNumber = 50
+p2_startNumber = 15
 p2_n = 10
 p2_step = 50
 p2_dataRange = [x for x in range(
@@ -44,7 +44,7 @@ tempDensity02 = [{
     "data": []
 },
     {
-    "name": "numberOfHcycles",
+    "name": "cyclesNumber",
     "data": []
 }]
 
@@ -85,18 +85,18 @@ for d in densities:
     for r in p1_dataRange:
         # Generate graph
         graph, d_approx = createGraph(r, d)
-        # tE
-        startEuler = time.time_ns()
-        tmp = eulerianCycle(graph)
-        resultEuler = time.time_ns() - startEuler
         # tH1
         startHamilton1 = time.time_ns()
         tmp = hamCycle(graph, False)
         resultHamilton1 = time.time_ns() - startHamilton1
         # tHA
         startHamiltonA = time.time_ns()
-        tmp = hamCycle(graph, True)
+        counter = hamCycle(graph, True)
         resultHamiltonA = time.time_ns() - startHamiltonA
+        # tE
+        startEuler = time.time_ns()
+        tmp = eulerianCycle(graph)
+        resultEuler = time.time_ns() - startEuler
 
         # Add results
         if d == 0.2:
@@ -110,6 +110,7 @@ for d in densities:
             tempDensity06[0]["data"].append(r)
             tempDensity06[1]["data"].append(d_approx)
             tempDensity06[2]["data"].append(resultEuler)
+            tempDensity06[3]["data"].append(resultHamilton1)
             tempDensity06[4]["data"].append(resultHamiltonA)
             tempDensity06[5]["data"].append(counter)
 
@@ -119,14 +120,14 @@ for d in densities:
     for r in p2_dataRange:
         # Generate graph
         graph, d_approx = createGraph(r, d)
-        # tE
-        startEuler = time.time_ns()
-        tmp = eulerianCycle(graph)
-        resultEuler = time.time_ns() - startEuler
         # tH1
         startHamilton1 = time.time_ns()
         tmp = hamCycle(graph, False)
         resultHamilton1 = time.time_ns() - startHamilton1
+        # tE
+        startEuler = time.time_ns()
+        tmp = eulerianCycle(graph)
+        resultEuler = time.time_ns() - startEuler
 
         # Add results
         if d == 0.2:
@@ -138,7 +139,7 @@ for d in densities:
             tempDensity06[0]["data"].append(r)
             tempDensity06[1]["data"].append(d_approx)
             tempDensity06[2]["data"].append(resultEuler)
-            tempDensity02[3]["data"].append(resultHamiltonA)
+            tempDensity06[3]["data"].append(resultHamilton1)
 
         print(f'n={r} done')
 
