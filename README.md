@@ -1,4 +1,4 @@
-# AISD-graphs-cycles
+# AISD-euler-hamilton
 For laboratory - Algorithms and Data Structures
 ---
 Team work project
