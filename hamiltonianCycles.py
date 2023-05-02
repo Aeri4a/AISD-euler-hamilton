@@ -1,58 +1,56 @@
-import random
 
-hasCycle = False
+stack = []
+pos = 0
+visited = []
 done = False
 counter = 0
 
-def hamCycle(graph, multiple):
-    global hasCycle
-    global counter
-    global done
 
-    done = False
-    counter = 0
-    hasCycle = False  
-    path = []
-    path.append(random.randint(1, len(graph)))
- 
-    visited = [False]*(len(graph)) 
-    visited[0] = True
+def findHC(multiple, v, graph):
+    global stack, pos, visited, done, counter
 
-    FindHamCycle(graph, 1, path, visited, multiple)
- 
-    if hasCycle:
-        print("No Hamiltonian Cycle" + "possible ")
-        return 0
-    return counter
+    if multiple:
+        done = False
 
-def FindHamCycle(graph, pos, path, visited, multiple):
-  global done
-  global counter
-  
-  if multiple:
-      done = False
-  if not done:
-    if pos == len(graph):
-        
-        if path[-1] in graph[1]:
-            counter += 1
-            done = True
-                        
-            path.append(1)
-            # for i in range(len(path)):
-            #     print(path[i], end = " ")
-            # print()                
-            path.pop()
-        
-            hasCycle = True
-        return
-
-    for v in graph[path[pos-1]]:
-        if not visited[v-1]:
-            path.append(v)
+    if not done:
+        stack.append(v)
+        pos += 1
+        if pos < len(graph):
             visited[v-1] = True
-
-            FindHamCycle(graph, pos + 1, path, visited, multiple)
-
+            # Search for a neighbour
+            for nb in graph[v].keys():
+                if not visited[nb-1]:
+                    findHC(multiple, nb, graph)
             visited[v-1] = False
-            path.pop()
+        else:
+            test = False  # assume cycle not present
+            # Check if it is a cycle
+            for nb in graph[v].keys():
+                if nb == 1:
+                    test = True
+                    break
+
+            if test:
+                counter += 1
+                done = True
+                # stack.append(1)
+                # for i in range(pos+1):
+                #     print(stack[i], end=" ")
+                # print()
+                # stack.pop()
+        stack.pop()
+        pos -= 1
+
+
+def hamiltonianCycles(multiple, graph):
+    global stack, pos, visited, done, counter
+    counter = 0
+
+    # Visited indexes - from 0 to lenght-1, call by vertex-1
+    visited = [False]*len(graph)
+    stack = []
+    pos = 0
+    done = False
+
+    findHC(multiple, 1, graph)
+    return counter

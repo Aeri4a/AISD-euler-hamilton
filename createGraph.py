@@ -1,5 +1,6 @@
 import random
 
+
 def createGraph(n, d):
 
     m = n * (n - 1) / 2 * d

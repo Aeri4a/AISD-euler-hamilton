@@ -16,8 +16,8 @@ p1_dataRange = [x for x in range(
 
 # - II part
 p2_startNumber = 15
-p2_n = 10
-p2_step = 50
+p2_n = 15
+p2_step = 10
 p2_dataRange = [x for x in range(
     p2_startNumber, p2_startNumber + (p2_n - 1) * p2_step + 1, p2_step)]
 
@@ -87,11 +87,11 @@ for d in densities:
         graph, d_approx = createGraph(r, d)
         # tH1
         startHamilton1 = time.time_ns()
-        tmp = hamCycle(graph, False)
+        tmp = hamiltonianCycles(False, graph)
         resultHamilton1 = time.time_ns() - startHamilton1
         # tHA
         startHamiltonA = time.time_ns()
-        counter = hamCycle(graph, True)
+        counter = hamiltonianCycles(True, graph)
         resultHamiltonA = time.time_ns() - startHamiltonA
         # tE
         startEuler = time.time_ns()
@@ -122,7 +122,7 @@ for d in densities:
         graph, d_approx = createGraph(r, d)
         # tH1
         startHamilton1 = time.time_ns()
-        tmp = hamCycle(graph, False)
+        tmp = hamiltonianCycles(False, graph)
         resultHamilton1 = time.time_ns() - startHamilton1
         # tE
         startEuler = time.time_ns()
