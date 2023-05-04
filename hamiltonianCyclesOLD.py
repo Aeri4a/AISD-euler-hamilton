@@ -1,28 +1,19 @@
 
 stack = []
-pos = 0
 visited = []
 done = False
 counter = 0
+notSafe = []
 
 
 def findHC(multiple, v, graph):
-    global stack, pos, visited, done, counter
+    global stack, visited, done, counter, notSafe
 
     if multiple:
         done = False
 
     if not done:
-        stack.append(v)
-        pos += 1
-        if pos < len(graph):
-            visited[v-1] = True
-            # Search for a neighbour
-            for nb in graph[v].keys():
-                if not visited[nb-1]:
-                    findHC(multiple, nb, graph)
-            visited[v-1] = False
-        else:
+        if len(stack) == len(graph):
             test = False  # assume cycle not present
             # Check if it is a cycle
             for nb in graph[v].keys():
@@ -38,8 +29,19 @@ def findHC(multiple, v, graph):
                 #     print(stack[i], end=" ")
                 # print()
                 # stack.pop()
+            else:
+                notSafe.append(stack)
+        else:
+            # print(f'Graph len: {len(graph)}; Stack: {stack}')
+            stack.append(v)
+            visited[v-1] = True
+            # Search for a neighbour
+            for nb in graph[v].keys():
+                if not visited[nb-1] and stack not in notSafe:
+                    findHC(multiple, nb, graph)
+            visited[v-1] = False
+
         stack.pop()
-        pos -= 1
 
 
 def hamiltonianCycles(multiple, graph):
@@ -49,7 +51,6 @@ def hamiltonianCycles(multiple, graph):
     # Visited indexes - from 0 to lenght-1, call by vertex-1
     visited = [False]*len(graph)
     stack = []
-    pos = 0
     done = False
 
     findHC(multiple, 1, graph)
